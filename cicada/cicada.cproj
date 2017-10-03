@@ -1205,6 +1205,12 @@
     <Compile Include="src\ASF\sam0\utils\syscalls\gcc\syscalls.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\I2C.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\I2C.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\main.c">
       <SubType>compile</SubType>
     </Compile>

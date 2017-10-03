@@ -120,6 +120,7 @@ C_SRCS +=  \
 ../src/ASF/sam0/utils/cmsis/samd21/source/gcc/startup_samd21.c \
 ../src/ASF/sam0/utils/cmsis/samd21/source/system_samd21.c \
 ../src/ASF/sam0/utils/syscalls/gcc/syscalls.c \
+../src/I2C.c \
 ../src/main.c
 
 
@@ -151,6 +152,7 @@ src/ASF/sam0/drivers/system/system.o \
 src/ASF/sam0/utils/cmsis/samd21/source/gcc/startup_samd21.o \
 src/ASF/sam0/utils/cmsis/samd21/source/system_samd21.o \
 src/ASF/sam0/utils/syscalls/gcc/syscalls.o \
+src/I2C.o \
 src/main.o
 
 OBJS_AS_ARGS +=  \
@@ -175,6 +177,7 @@ src/ASF/sam0/drivers/system/system.o \
 src/ASF/sam0/utils/cmsis/samd21/source/gcc/startup_samd21.o \
 src/ASF/sam0/utils/cmsis/samd21/source/system_samd21.o \
 src/ASF/sam0/utils/syscalls/gcc/syscalls.o \
+src/I2C.o \
 src/main.o
 
 C_DEPS +=  \
@@ -199,6 +202,7 @@ src/ASF/sam0/drivers/system/system.d \
 src/ASF/sam0/utils/cmsis/samd21/source/gcc/startup_samd21.d \
 src/ASF/sam0/utils/cmsis/samd21/source/system_samd21.d \
 src/ASF/sam0/utils/syscalls/gcc/syscalls.d \
+src/I2C.d \
 src/main.d
 
 C_DEPS_AS_ARGS +=  \
@@ -223,6 +227,7 @@ src/ASF/sam0/drivers/system/system.d \
 src/ASF/sam0/utils/cmsis/samd21/source/gcc/startup_samd21.d \
 src/ASF/sam0/utils/cmsis/samd21/source/system_samd21.d \
 src/ASF/sam0/utils/syscalls/gcc/syscalls.d \
+src/I2C.d \
 src/main.d
 
 OUTPUT_FILE_PATH +=cicada.elf
@@ -240,6 +245,8 @@ LINKER_SCRIPT_DEP+=  \
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 
