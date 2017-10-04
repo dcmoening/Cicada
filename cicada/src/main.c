@@ -55,21 +55,9 @@ int main (void)
 	arch_ioport_init();
 	initIO();
 
-	/* Configure device and enable. */
-	configure_i2c_master();
 
-	/*Create and initialize configuration structure*/
-	struct i2c_master_config config_i2c_master;
-	i2c_master_get_config_defaults(&config_i2c_master);
 
-	/*Change settings in the configuration*/
-	config_i2c_master.buffer_timeout = 10000;
-
-	/*Initialize the module with the set configurations.*/
-	i2c_master_init(&i2c_master_instance, SERCOM2, &config_i2c_master);
-
-	/*Enable the module.*/
-	i2c_master_enable(&i2c_master_instance);
+	
 
 
 	/************************************************************************/

@@ -12,29 +12,19 @@
 	 /* Initialize config structure and software module. */
 	 struct i2c_master_config config_i2c_master;
 	 i2c_master_get_config_defaults(&config_i2c_master);
+	 
 	 /* Change buffer timeout to something longer. */
-	 config_i2c_master.buffer_timeout = 10000;
-	 /* Initialize and enable device with config. */
-	 i2c_master_init(&i2c_master_instance, SERCOM2, &config_i2c_master);
-	 i2c_master_enable(&i2c_master_instance);	 
+	 config_i2c_master.buffer_timeout = 10000; 
  }
-
- void getI2CDataFromSlave(i2c_master_instance masterInstance, i2c_master_packet masterPacket)
+ 
+ void initI2CPacket(void)
  {
-	 while (i2c_master_write_packet_wait(masterInstance, masterPacket) !=
-	 STATUS_OK) {
-		 /* Increment timeout counter and check if timed out. */
-		 if (timeout++ == TIMEOUT) {
-			 break;
-		 }
-	 }
-	 /* Read from slave until success. */
-	 masterPacket.data = read_buffer;
-	 while (i2c_master_read_packet_wait(&i2c_master_instance, &masterPacket) !=
-	 STATUS_OK) {
-		 /* Increment timeout counter and check if timed out. */
-		 if (timeout++ == TIMEOUT) {
-			 break;
-		 }
-	 }
+   configure_i2c_master();
+   
+   packet.address = SLAVE_ADDRESS;
+   packet.data_length = DATA_LENGTH;
+   packet.data = write_buffer;
+   packet.ten_bit_address = false;
+   packet.high_speed = false;
+   packet.hs_master_code = 0x0;
  }
