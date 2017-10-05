@@ -44,6 +44,10 @@ src\ASF\sam0\utils\cmsis\samd21\source\system_samd21.c
 
 src\ASF\sam0\utils\syscalls\gcc\syscalls.c
 
+src\BMP280 Driver\bmp280.c
+
+src\BMP280 Driver\bmp280_support.c
+
 src\I2C.c
 
 src\main.c

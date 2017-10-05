@@ -606,6 +606,7 @@
     <Folder Include="src\ASF\thirdparty\freertos\freertos-7.4.2\Source\portable\GCC\ARM_CM0\" />
     <Folder Include="src\ASF\thirdparty\freertos\freertos-7.4.2\Source\portable\MemMang\" />
     <Folder Include="src\config\" />
+    <Folder Include="src\BMP280 Driver" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\ASF\sam0\drivers\sercom\i2c\i2c_sam0\i2c_master.c">
@@ -1203,6 +1204,15 @@
       <SubType>compile</SubType>
     </None>
     <Compile Include="src\ASF\sam0\utils\syscalls\gcc\syscalls.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\BMP280 Driver\bmp280.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\BMP280 Driver\bmp280.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\BMP280 Driver\bmp280_support.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\I2C.c">
