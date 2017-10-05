@@ -53,6 +53,7 @@ int main (void)
 	arch_ioport_init();
 	initIO();
 
+<<<<<<< HEAD
 	///* Configure device and enable. */
 	//configure_i2c_master();
 //
@@ -68,6 +69,11 @@ int main (void)
 //
 	///*Enable the module.*/
 	//i2c_master_enable(&i2c_master_instance);
+=======
+
+
+	
+>>>>>>> b8941d34e5c6e8f03dc5e2e2f76475a92e83f7a6
 
 
 	/************************************************************************/
