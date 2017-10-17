@@ -75,6 +75,8 @@
 
 #include <linux/types.h>
 #include <linux/math64.h>
+
+
 #define BMP280_64BITSUPPORT_PRESENT
 /* singed integer type*/
 typedef	int8_t s8;/**< used for signed 8bit */
@@ -773,8 +775,8 @@ struct bmp280_t {
 	u8 oversamp_temperature;/**< temperature over sampling*/
 	u8 oversamp_pressure;/**< pressure over sampling*/
 
-	BMP280_WR_FUNC_PTR;/**< bus write function pointer*/
-	BMP280_RD_FUNC_PTR;/**< bus read function pointer*/
+	BMP280_WR_FUNC_PTR; /**< bus write function pointer*/
+	BMP280_RD_FUNC_PTR; /**< bus read function pointer*/
 	void (*delay_msec)(BMP280_MDELAY_DATA_TYPE);/**< delay function pointer*/
 };
 /**************************************************************/
@@ -929,7 +931,7 @@ BMP280_RETURN_FUNCTION_TYPE bmp280_read_uncomp_pressure_temperature(
  *
 */
 BMP280_RETURN_FUNCTION_TYPE bmp280_read_pressure_temperature(
-		u32 *v_pressure_u32, s32 *v_pressure_s32);
+		u32 *v_temperature_u32, s32 *v_pressure_s32);
 /**************************************************************/
 /**\name	FUNCTION FOR READ CALIBRATION DATA    */
 /**************************************************************/

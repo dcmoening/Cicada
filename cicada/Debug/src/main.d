@@ -148,7 +148,8 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/sam0/drivers/sercom/i2c/i2c_master.h \
  ../src/ASF/sam0/drivers/sercom/i2c/i2c_common.h \
  ../src/ASF/sam0/drivers/sercom/i2c/i2c_master_interrupt.h \
- ../src/ASF/sam0/drivers/sercom/i2c/i2c_master.h ../src/I2C.h
+ ../src/ASF/sam0/drivers/sercom/i2c/i2c_master.h ../src/I2C.h \
+ ../src/BMP280\ Driver/bmp280.h
 
 ../src/asf.h:
 
@@ -455,3 +456,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/ASF/sam0/drivers/sercom/i2c/i2c_master.h:
 
 ../src/I2C.h:
+
+../src/BMP280\ Driver/bmp280.h:

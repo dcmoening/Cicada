@@ -88,7 +88,7 @@ BMP280_RETURN_FUNCTION_TYPE bmp280_init(struct bmp280_t *bmp280)
 	u8 v_chip_id_read_count = BMP280_CHIP_ID_READ_COUNT;
 
 	p_bmp280 = bmp280;/* assign BMP280 ptr */
-
+	
 	while (v_chip_id_read_count > 0) {
 		/* read chip id */
 		com_rslt = p_bmp280->BMP280_BUS_READ_FUNC(p_bmp280->dev_addr,

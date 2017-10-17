@@ -814,8 +814,9 @@ static enum status_code _i2c_master_write_packet(
 			}
 
 			/* Write byte to slave. */
-			_i2c_master_wait_for_sync(module);
 			i2c_module->DATA.reg = packet->data[buffer_counter++];
+			_i2c_master_wait_for_sync(module);
+			
 
 			/* Wait for response. */
 			tmp_status = _i2c_master_wait_for_bus(module);

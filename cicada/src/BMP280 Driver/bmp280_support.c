@@ -52,6 +52,7 @@
 /*---------------------------------------------------------------------------*/
 /* Includes*/
 /*---------------------------------------------------------------------------*/
+#include <I2C.h>
 #include "bmp280.h"
 
 #define BMP280_API
@@ -86,19 +87,19 @@ s8 BMP280_I2C_bus_write(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt);
  *		which is written in the register
  *	\param cnt : The no of bytes of data to be written
  */
-s8 BMP280_SPI_bus_write(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt);
-/*	\Brief: The function is used as SPI bus read
- *	\Return : Status of the SPI read
- *	\param dev_addr : The device address of the sensor
- *	\param reg_addr : Address of the first register, where data is going to be read
- *	\param reg_data : This is the data read from the sensor, which is held in an array
- *	\param cnt : The no of bytes of data to be read */
-s8 BMP280_SPI_bus_read(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt);
+//s8 BMP280_SPI_bus_write(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt);
+///*	\Brief: The function is used as SPI bus read
+ //*	\Return : Status of the SPI read
+ //*	\param dev_addr : The device address of the sensor
+ //*	\param reg_addr : Address of the first register, where data is going to be read
+ //*	\param reg_data : This is the data read from the sensor, which is held in an array
+ //*	\param cnt : The no of bytes of data to be read */
+//s8 BMP280_SPI_bus_read(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt);
 /*
  * \Brief: SPI/I2C init routine
 */
 s8 I2C_routine(void);
-s8 SPI_routine(void);
+//s8 SPI_routine(void);
 #endif
 /********************End of I2C/SPI function declarations***********************/
 /*	Brief : The delay routine
@@ -281,20 +282,20 @@ s8 I2C_routine(void) {
  * The following function is used to map the SPI bus read, write and delay
  * with global structure bmp280_t
  *--------------------------------------------------------------------------*/
-s8 SPI_routine(void) {
-/*--------------------------------------------------------------------------*
- *  By using bmp280 the following structure parameter can be accessed
- *	Bus write function pointer: BMP280_WR_FUNC_PTR
- *	Bus read function pointer: BMP280_RD_FUNC_PTR
- *	Delay function pointer: delay_msec
- *--------------------------------------------------------------------------*/
-
-	bmp280.bus_write = BMP280_SPI_bus_write;
-	bmp280.bus_read = BMP280_SPI_bus_read;
-	bmp280.delay_msec = BMP280_delay_msek;
-
-	return BMP280_INIT_VALUE;
-}
+//s8 SPI_routine(void) {
+///*--------------------------------------------------------------------------*
+ //*  By using bmp280 the following structure parameter can be accessed
+ //*	Bus write function pointer: BMP280_WR_FUNC_PTR
+ //*	Bus read function pointer: BMP280_RD_FUNC_PTR
+ //*	Delay function pointer: delay_msec
+ //*--------------------------------------------------------------------------*/
+//
+	//bmp280.bus_write = BMP280_SPI_bus_write;
+	//bmp280.bus_read = BMP280_SPI_bus_read;
+	//bmp280.delay_msec = BMP280_delay_msek;
+//
+	//return BMP280_INIT_VALUE;
+//}
 
 /************** I2C/SPI buffer length ******/
 
@@ -329,6 +330,7 @@ s8  BMP280_I2C_bus_write(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
 	for (stringpos = BMP280_INIT_VALUE; stringpos < cnt; stringpos++) {
 		array[stringpos + BMP280_DATA_INDEX] = *(reg_data + stringpos);
 	}
+	uint8_t ret;
 	/*
 	* Please take the below function as your reference for
 	* write the data using I2C communication
@@ -344,6 +346,8 @@ s8  BMP280_I2C_bus_write(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
 	* have to be initiated.Thus cnt+1 operation done in the I2C write string function
 	* For more information please refer data sheet SPI communication:
 	*/
+	iError = I2C_Write(dev_addr,reg_addr,reg_data,cnt);
+
 	return (s8)iError;
 }
 
@@ -354,26 +358,29 @@ s8  BMP280_I2C_bus_write(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
  *	\param reg_data : This is the data read from the sensor, which is held in an array
  *	\param cnt : The no of data to be read
  */
-s8  BMP280_I2C_bus_read(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
-{
-	s32 iError = BMP280_INIT_VALUE;
-	u8 array[I2C_BUFFER_LEN] = {BMP280_INIT_VALUE};
-	u8 stringpos = BMP280_INIT_VALUE;
-	array[BMP280_INIT_VALUE] = reg_addr;
-	/* Please take the below function as your reference
-	 * to read the data using I2C communication
-	 * add your I2C rad function here.
-	 * "IERROR = I2C_WRITE_READ_STRING(DEV_ADDR, ARRAY, ARRAY, 1, CNT)"
-	 * iError is an return value of SPI write function
-	 * Please select your valid return value
-	 * In the driver SUCCESS defined as BMP280_INIT_VALUE
-	 * and FAILURE defined as -1
-	 */
-	for (stringpos = BMP280_INIT_VALUE; stringpos < cnt; stringpos++) {
-		*(reg_data + stringpos) = array[stringpos];
-	}
-	return (s8)iError;
-}
+//s8  BMP280_I2C_bus_read(u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt)
+//{
+	//s32 iError = BMP280_INIT_VALUE;
+	//u8 array[I2C_BUFFER_LEN] = {BMP280_INIT_VALUE};
+	//u8 stringpos = BMP280_INIT_VALUE;
+	//array[BMP280_INIT_VALUE] = reg_addr;
+	///* Please take the below function as your reference
+	 //* to read the data using I2C communication
+	 //* add your I2C rad function here.
+	 //* "IERROR = I2C_WRITE_READ_STRING(DEV_ADDR, ARRAY, ARRAY, 1, CNT)"
+	 //* iError is an return value of SPI write function
+	 //* Please select your valid return value
+	 //* In the driver SUCCESS defined as BMP280_INIT_VALUE
+	 //* and FAILURE defined as -1
+	 //*/
+//
+	 //iError = I2C_Write(dev_addr,reg_addr,reg_data,cnt);
+//
+	//for (stringpos = BMP280_INIT_VALUE; stringpos < cnt; stringpos++) {
+		//*(reg_data + stringpos) = array[stringpos];
+	//}
+	//return (s8)iError;
+//}
 
 /*	\Brief: The function is used as SPI bus read
  *	\Return : Status of the SPI read
