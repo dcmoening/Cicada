@@ -30,10 +30,11 @@
       <framework-data>
         <options>
           <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="sam0.drivers.system" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="thirdparty.os.freertos.version" value="Add" config="7.4.2" content-id="Atmel.ASF" />
           <option id="common.services.ioport" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam0.drivers.sercom.i2c.master" value="Add" config="callback" content-id="Atmel.ASF" />
+          <option id="sam0.drivers.system" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="thirdparty.os.freertos.version" value="Add" config="7.4.2" content-id="Atmel.ASF" />
+          <option id="common2.services.delay" value="Add" config="systick" content-id="Atmel.ASF" />
           <option id="sam0.utils.linker_scripts" value="Add" config="" content-id="Atmel.ASF" />
         </options>
         <configurations>
@@ -240,11 +241,14 @@
           <file path="src/ASF/thirdparty/freertos/freertos-7.4.2/Source/portable/GCC/ARM_CM0/port.c" framework="" version="3.34.1" source="thirdparty\freertos\freertos-7.4.2\Source\portable\GCC\ARM_CM0\port.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/freertos/freertos-7.4.2/Source/portable/GCC/ARM_CM0/portmacro.h" framework="" version="3.34.1" source="thirdparty\freertos\freertos-7.4.2\Source\portable\GCC\ARM_CM0\portmacro.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/freertos/freertos-7.4.2/Source/portable/MemMang/heap_1.c" framework="" version="3.34.1" source="thirdparty\freertos\freertos-7.4.2\Source\portable\MemMang\heap_1.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common2/services/delay/sam0/systick_counter.c" framework="" version="3.36.1" source="common2\services\delay\sam0\systick_counter.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common2/services/delay/delay.h" framework="" version="3.36.1" source="common2\services\delay\delay.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common2/services/delay/sam0/systick_counter.h" framework="" version="3.36.1" source="common2\services\delay\sam0\systick_counter.h" changed="False" content-id="Atmel.ASF" />
         </files>
         <documentation help="http://asf.atmel.com/docs/3.34.1/common.applications.user_application.sam0_system.user_board.atsamd21g18au/html/index.html" />
         <offline-documentation help="" />
         <dependencies>
-          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.34.1" />
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.36.1" />
         </dependencies>
         <project id="common.applications.user_application.sam0_system.user_board.atsamd21g18au" value="Add" config="" content-id="Atmel.ASF" />
         <board id="board.user_board.samd21g" value="Add" config="" content-id="Atmel.ASF" />
@@ -260,12 +264,15 @@
           <SwdClock>4000000</SwdClock>
         </InterfaceProperties>
         <InterfaceName>SWD</InterfaceName>
+        <JlinkConfigFile>C:\Users\daniel\Documents\Atmel Studio\7.0\Cicada-master\Phase 1 Source Code\cicada\jlink.config</JlinkConfigFile>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.samice</ToolType>
       <ToolNumber>260104075</ToolNumber>
       <ToolName>J-Link</ToolName>
     </com_atmel_avrdbg_tool_samice>
     <avrtoolinterfaceclock>4000000</avrtoolinterfaceclock>
+    <ResetRule>0</ResetRule>
+    <EraseKey />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -282,6 +289,7 @@
       <Value>ARM_MATH_CM0PLUS=true</Value>
       <Value>I2C_MASTER_CALLBACK_MODE=true</Value>
       <Value>__FREERTOS__</Value>
+      <Value>SYSTICK_MODE</Value>
     </ListValues>
   </armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.IncludePaths>
@@ -314,6 +322,8 @@
       <Value>../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/include</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/portable/GCC/ARM_CM0</Value>
+      <Value>../src/ASF/common2/services/delay</Value>
+      <Value>../src/ASF/common2/services/delay/sam0</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
@@ -365,9 +375,11 @@
       <Value>../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/include</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/portable/GCC/ARM_CM0</Value>
+      <Value>../src/ASF/common2/services/delay</Value>
+      <Value>../src/ASF/common2/services/delay/sam0</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
-  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBOARD=USER_BOARD -DI2C_MASTER_CALLBACK_MODE=true -D__FREERTOS__</armgcc.preprocessingassembler.general.AssemblerFlags>
+  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBOARD=USER_BOARD -DI2C_MASTER_CALLBACK_MODE=true -D__FREERTOS__ -DSYSTICK_MODE</armgcc.preprocessingassembler.general.AssemblerFlags>
   <armgcc.preprocessingassembler.general.IncludePaths>
     <ListValues>
       <Value>../src/ASF/common/boards</Value>
@@ -398,6 +410,8 @@
       <Value>../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/include</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/portable/GCC/ARM_CM0</Value>
+      <Value>../src/ASF/common2/services/delay</Value>
+      <Value>../src/ASF/common2/services/delay/sam0</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>
@@ -418,6 +432,7 @@
       <Value>ARM_MATH_CM0PLUS=true</Value>
       <Value>I2C_MASTER_CALLBACK_MODE=true</Value>
       <Value>__FREERTOS__</Value>
+      <Value>SYSTICK_MODE</Value>
     </ListValues>
   </armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.IncludePaths>
@@ -450,6 +465,9 @@
       <Value>../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/include</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/portable/GCC/ARM_CM0</Value>
+      <Value>../src/ASF/common2/services/delay</Value>
+      <Value>../src/ASF/common2/services/delay/sam0</Value>
+      <Value>../src/BMP280_Driver</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -503,10 +521,12 @@
       <Value>../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/include</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/portable/GCC/ARM_CM0</Value>
+      <Value>../src/ASF/common2/services/delay</Value>
+      <Value>../src/ASF/common2/services/delay/sam0</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.assembler.debugging.DebugLevel>Default (-g)</armgcc.assembler.debugging.DebugLevel>
-  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBOARD=USER_BOARD -DI2C_MASTER_CALLBACK_MODE=true -D__FREERTOS__</armgcc.preprocessingassembler.general.AssemblerFlags>
+  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBOARD=USER_BOARD -DI2C_MASTER_CALLBACK_MODE=true -D__FREERTOS__ -DSYSTICK_MODE</armgcc.preprocessingassembler.general.AssemblerFlags>
   <armgcc.preprocessingassembler.general.IncludePaths>
     <ListValues>
       <Value>../src/ASF/common/boards</Value>
@@ -537,6 +557,8 @@
       <Value>../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/include</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/portable/GCC/ARM_CM0</Value>
+      <Value>../src/ASF/common2/services/delay</Value>
+      <Value>../src/ASF/common2/services/delay/sam0</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
   <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
@@ -549,6 +571,9 @@
     <Folder Include="src\ASF\common2\" />
     <Folder Include="src\ASF\common2\boards\" />
     <Folder Include="src\ASF\common2\boards\user_board\" />
+    <Folder Include="src\ASF\common2\services\" />
+    <Folder Include="src\ASF\common2\services\delay\" />
+    <Folder Include="src\ASF\common2\services\delay\sam0\" />
     <Folder Include="src\ASF\common\" />
     <Folder Include="src\ASF\common\boards\" />
     <Folder Include="src\ASF\common\services\" />
@@ -606,9 +631,18 @@
     <Folder Include="src\ASF\thirdparty\freertos\freertos-7.4.2\Source\portable\GCC\ARM_CM0\" />
     <Folder Include="src\ASF\thirdparty\freertos\freertos-7.4.2\Source\portable\MemMang\" />
     <Folder Include="src\config\" />
-    <Folder Include="src\BMP280 Driver" />
+    <Folder Include="src\BMP280_Driver" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\ASF\common2\services\delay\delay.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\common2\services\delay\sam0\systick_counter.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\common2\services\delay\sam0\systick_counter.h">
+      <SubType>compile</SubType>
+    </None>
     <Compile Include="src\ASF\sam0\drivers\sercom\i2c\i2c_sam0\i2c_master.c">
       <SubType>compile</SubType>
     </Compile>
@@ -624,10 +658,28 @@
     <Compile Include="src\ASF\thirdparty\freertos\freertos-7.4.2\Source\portable\MemMang\heap_1.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\BMP280_Driver\bmp280.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\BMP280_Driver\bmp280.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\BMP280_Driver\bmp280_defs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\PressureTemperature.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\PressureTemperature.h">
+      <SubType>compile</SubType>
+    </Compile>
     <None Include="src\ASF\thirdparty\freertos\freertos-7.4.2\Source\portable\GCC\ARM_CM0\portmacro.h">
       <SubType>compile</SubType>
     </None>
     <None Include="src\ASF\thirdparty\freertos\freertos-7.4.2\Source\portable\readme.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\BMP280_Driver\README.md">
       <SubType>compile</SubType>
     </None>
     <None Include="src\config\FreeRTOSConfig.h">
@@ -1204,15 +1256,6 @@
       <SubType>compile</SubType>
     </None>
     <Compile Include="src\ASF\sam0\utils\syscalls\gcc\syscalls.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\BMP280 Driver\bmp280.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\BMP280 Driver\bmp280.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\BMP280 Driver\bmp280_support.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\I2C.c">

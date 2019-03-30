@@ -28,43 +28,54 @@
  * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 #include <asf.h>
-#include <I2C.h>
-#include <BMP280 Driver/bmp280.h>
-#include <stdio.h>
+#include "PressureTemperature.h"
 
-/* Timeout counter. */
-uint16_t timeout = 0;
-
+//////////////////////////////////////////////////////////////////////////
+//Main Function Where The Magic Happens!
+//////////////////////////////////////////////////////////////////////////
 int main (void)
-{
+{	
+	double temperature = 0;
+	double pressure = 0;
 
-	uint8_t *ptr = read_buffer;
-	struct bmp280_t *ptSens;
-	u32 v_pressure_u32; 
-	s32 v_temperature_s32;
-	system_init();
-	system_clock_init();
-	arch_ioport_init();
+	double debug_temp = 0;
+	double debug_pres = 0;
 
-	initI2CStruct();
+	static double final_temp = 0;
+	static double final_pres = 0;
 
+	//Initialize I2C settings
 	configure_i2c_master();
-	ptSens->chip_id = 0x58;
-	ptSens->dev_addr = 0X76;
-	bmp280_read_pressure_temperature(v_temperature_s32,v_pressure_u32);
 
-	///*Initialize the module with the set configurations.*/
-	//i2c_master_init(&i2c_master_instance, SERCOM2, &config_i2c_master);
+	//Initialize delay settings
+	delay_init();
 
-	///*Enable the module.*/
-	//i2c_master_enable(&i2c_master_instance);
+	//Init BMP280 Data structure
+	InitBMP280();
 
+	//Configure settings for BMP280
+	ConfigureBMP280();
+	
+	//Get Temperature and Pressure
+	BMP280_ReadCompPresTemp(&temperature, &pressure);
 
+	debug_temp = temperature;
+	debug_pres = pressure;	
 
-	/************************************************************************/
-	/* Create timer to toggle Pin 13 LED                                                                      */
-	/************************************************************************/
-	//xTimerStart(Timer_id, 0);
-	//vTaskStartScheduler();
-	//while(1);
+	BMP280_ReadCompPresTemp(&temperature, &pressure);
+
+	debug_temp = temperature;
+	debug_pres = pressure;
+	
+	BMP280_ReadCompPresTemp(&temperature, &pressure);
+
+	debug_temp = temperature;
+	debug_pres = pressure;
+	
+	BMP280_ReadCompPresTemp(&temperature, &pressure);
+
+	debug_temp = temperature;
+	debug_pres = pressure;		
+
+	return 0;
 }

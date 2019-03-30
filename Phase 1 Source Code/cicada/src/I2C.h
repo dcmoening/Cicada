@@ -23,10 +23,6 @@
 struct i2c_master_module i2c_master_instance;
 struct i2c_master_packet packet;
 
-static uint8_t write_buffer[DATA_LENGTH] = {
-	0xD0
-}; 
-
 static uint8_t read_buffer[DATA_LENGTH];
 
 //struct i2c_master_packet {

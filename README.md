@@ -6,7 +6,7 @@ This project will be conducted in three phases. The first phase will be to const
 # Hardware (Phase 1) #
 - [Adafruit Ultimate GPS Breakout](https://www.adafruit.com/product/746?gclid=Cj0KCQjw5arMBRDzARIsAAqmJewALG1dQekojggsRzns4Ux1qxPu-yFRM9Kns_N_SPRtXcY6n1gRZxEaApyHEALw_wcB)
 
-- [Bosch Sensortec (Breakout Board)](https://www.amazon.com/Adafruit-BMP280-Barometric-Pressure-Altitude/dp/B013W0RR6Y/ref=sr_1_2?ie=UTF8&qid=1544297943&sr=8-2&keywords=bmp280)
+- [Bosch Sensortec (Breakout Board)](https://www.amazon.com/Pressure-Replace-Precision-Atmospheric-Arduino/dp/B01N5EU9VD/ref=sr_1_15?ie=UTF8&qid=1501114695&sr=8-15&keywords=barometric+pressure+breakout)
 
 - [Adafruit Feather M0 Adalogger](https://www.adafruit.com/product/2796)
 

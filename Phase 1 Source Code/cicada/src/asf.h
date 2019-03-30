@@ -59,6 +59,9 @@
 // From module: Common build items for user board support templates
 #include <user_board.h>
 
+// From module: Delay routines
+#include <delay.h>
+
 // From module: FreeRTOS - kernel 7.4.2
 #include <FreeRTOS.h>
 #include <StackMacros.h>

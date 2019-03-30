@@ -1,0 +1,173 @@
+\subsection*{Table of Contents}
+
+
+\begin{DoxyItemize}
+\item \href{#Intro}{\tt Introduction}
+\item \href{#Ver}{\tt Version and date}
+\item \href{#file}{\tt Driver files information}
+\item \href{#interface}{\tt Sensor interfaces}
+\item \href{#examples}{\tt Integration Examples}
+\end{DoxyItemize}
+
+\subsubsection*{Introduction\label{_Intro}%
+}
+
+This package contains the Bosch Sensortec\textquotesingle{}s B\+M\+P280 sensor driver (sensor A\+PI)
+
+The sensor driver package includes \mbox{\hyperlink{bmp280_8h}{bmp280.\+h}}, \mbox{\hyperlink{bmp280_8c}{bmp280.\+c}} and \mbox{\hyperlink{bmp280__defs_8h}{bmp280\+\_\+defs.\+h}} files
+
+\subsubsection*{Version and date\label{_Ver}%
+}
+
+\tabulinesep=1mm
+\begin{longtabu} spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\rowcolor{\tableheadbgcolor}\textbf{ Driver files  }&\textbf{ Version  }&\textbf{ Date -\/-\/-\/---   }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\rowcolor{\tableheadbgcolor}\textbf{ Driver files  }&\textbf{ Version  }&\textbf{ Date -\/-\/-\/---   }\\\cline{1-3}
+\endhead
+\mbox{\hyperlink{bmp280_8c}{bmp280.\+c}}  &3.\+0.\+0  &3 Apr 2018   \\\cline{1-3}
+\mbox{\hyperlink{bmp280_8h}{bmp280.\+h}}  &3.\+0.\+0  &3 Apr 2018   \\\cline{1-3}
+\mbox{\hyperlink{bmp280__defs_8h}{bmp280\+\_\+defs.\+h}}  &3.\+0.\+0  &3 Apr 2018   \\\cline{1-3}
+\end{longtabu}
+
+
+\subsubsection*{Driver files information\label{_file}%
+}
+
+
+\begin{DoxyItemize}
+\item {\ttfamily \mbox{\hyperlink{bmp280_8c}{bmp280.\+c}}} \+: This source file contains the function definitions of the sensor A\+PI interfaces.
+\item {\ttfamily \mbox{\hyperlink{bmp280_8h}{bmp280.\+h}}} \+: This header file contains the function declarations of the sensor A\+PI interfaces.
+\item {\ttfamily \mbox{\hyperlink{bmp280__defs_8h}{bmp280\+\_\+defs.\+h}}} \+: This header file has the constants, macros and data type declarations.
+\end{DoxyItemize}
+
+\subsection*{Sensor interfaces\label{_interface}%
+}
+
+
+\begin{DoxyItemize}
+\item S\+PI 4-\/wire, S\+PI 3-\/wire interface
+\item I2C interface
+\end{DoxyItemize}
+
+\subsubsection*{Integration Examples\label{_examples}%
+}
+
+\paragraph*{Initializing the sensor}
+
+To initialize the sensor, you will first need to create a device structure. You can do this by creating an instance of the structure \mbox{\hyperlink{structbmp280__dev}{bmp280\+\_\+dev}}. Then update the various parameters in structure as shown below.
+
+\subparagraph*{Initialization for S\+PI 4-\/\+Wire interface}
+
+
+\begin{DoxyCode}
+int8\_t rslt;
+\textcolor{keyword}{struct }\mbox{\hyperlink{structbmp280__dev}{bmp280\_dev}} bmp;
+
+\textcolor{comment}{/* Sensor interface over SPI with native chip select line */}
+bmp.dev\_id  =  0;
+bmp.intf = BMP280\_SPI\_INTF;
+bmp.read = user\_spi\_read;
+bmp.write = user\_spi\_write;
+bmp.delay\_ms = user\_delay\_ms;
+
+rslt = \mbox{\hyperlink{bmp280_8c_a4a9809dbaa4df084461c705045925f8e}{bmp280\_init}}(&bmp);
+
+\textcolor{keywordflow}{if} (rslt == BMP280\_OK) \{
+  \textcolor{comment}{/* Sensor chip ID will be printed if initialization was successful */}
+  printf(\textcolor{stringliteral}{"\(\backslash\)n Device found with chip id 0x%x"}, bmp.chip\_id);
+\}
+\end{DoxyCode}
+
+
+\subparagraph*{Initialization for I2C interface}
+
+
+\begin{DoxyCode}
+int8\_t rslt;
+struct bmp280\_dev bmp;
+/* Sensor interface over I2C with primary slave address  */
+bmp.dev\_id = BMP280\_I2C\_ADDR\_PRIM;
+bmp.intf = BMP280\_I2C\_INTF;
+bmp.read = user\_i2c\_read;
+bmp.write = user\_i2c\_write;
+bmp.delay\_ms = user\_delay\_ms;
+
+rslt = bmp280\_init(&bmp);
+
+if (rslt == BMP280\_OK) \{
+  /* Sensor chip ID will be printed if initialization was successful */
+  printf("\(\backslash\)n Device found with chip id 0x%x", bmp.chip\_id);
+\}
+\end{DoxyCode}
+
+
+\paragraph*{Sensor Configuration settings}
+
+\begin{quote}
+Pre-\/requisite \+: Initialize the sensor in S\+PI or I2C \end{quote}
+
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{struct }\mbox{\hyperlink{structbmp280__config}{bmp280\_config}} bmp;
+
+\textcolor{comment}{/* Always read the current settings before writing, especially when}
+\textcolor{comment}{ * all the configuration is not modified }
+\textcolor{comment}{ */}
+rslt = \mbox{\hyperlink{bmp280_8c_aded88d5f67beb1b3311bb0e26ecc19da}{bmp280\_get\_config}}(&conf, &bmp);
+\textcolor{comment}{/* Check if rslt == BMP280\_OK, if not, then handle accordingly */}
+
+\textcolor{comment}{/* Overwrite the desired settings */}
+conf.filter = BMP280\_FILTER\_COEFF\_2;
+conf.os\_pres = BMP280\_OS\_16X;
+conf.os\_temp = BMP280\_OS\_4X;
+conf.odr = BMP280\_ODR\_1000\_MS;
+
+rslt = \mbox{\hyperlink{bmp280_8c_a61799b86b24d68b7a20814fcaf9adea8}{bmp280\_set\_config}}(&conf, &bmp);
+\textcolor{comment}{/* Check if rslt == BMP280\_OK, if not, then handle accordingly */}
+
+\textcolor{comment}{/* Always set the power mode after setting the configuration */}
+rslt = \mbox{\hyperlink{bmp280_8c_a4401d930aa889a00121087f4aeac0182}{bmp280\_set\_power\_mode}}(BMP280\_NORMAL\_MODE, &bmp);
+\textcolor{comment}{/* Check if rslt == BMP280\_OK, if not, then handle accordingly */}
+\end{DoxyCode}
+
+
+\paragraph*{Example for data read out}
+
+\begin{quote}
+Pre-\/requisite \+: Initialize the sensor in S\+PI or I2C and set sensor mode and sensor settings \end{quote}
+
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{struct }\mbox{\hyperlink{structbmp280__uncomp__data}{bmp280\_uncomp\_data}} ucomp\_data;
+uint8\_t meas\_dur = \mbox{\hyperlink{bmp280_8c_a7dbe28b4cc8930af9ff23d1fe566f0c6}{bmp280\_compute\_meas\_time}}(&bmp);
+
+printf(\textcolor{stringliteral}{"Measurement duration: %dms\(\backslash\)r\(\backslash\)n"}, meas\_dur);
+
+\textcolor{comment}{/* Loop to read out 10 samples of data */} 
+\textcolor{keywordflow}{for} (uint8\_t i = 0; (i < 10) && (rslt == BMP280\_OK); i++) \{
+    bmp.delay\_ms(meas\_dur); \textcolor{comment}{/* Measurement time */}
+
+    rslt = \mbox{\hyperlink{bmp280_8c_ae99e0ecdad4920b363d1c258887b4ff3}{bmp280\_get\_uncomp\_data}}(&ucomp\_data, &bmp);
+    \textcolor{comment}{/* Check if rslt == BMP280\_OK, if not, then handle accordingly */}
+
+    int32\_t temp32 = \mbox{\hyperlink{bmp280_8c_a75854dc1f641714c4e3c1a1b30e1d2a3}{bmp280\_comp\_temp\_32bit}}(ucomp\_data.uncomp\_temp, &bmp);
+    uint32\_t pres32 = \mbox{\hyperlink{bmp280_8c_a69cdae4dcfce3e2ec6387997eb58d0db}{bmp280\_comp\_pres\_32bit}}(ucomp\_data.uncomp\_press, &bmp);
+    uint32\_t pres64 = \mbox{\hyperlink{bmp280_8c_a0e0c7b5b518db37f00a10fc333a128bb}{bmp280\_comp\_pres\_64bit}}(ucomp\_data.uncomp\_press, &bmp);
+    \textcolor{keywordtype}{double} temp = \mbox{\hyperlink{bmp280_8c_a5e5fb403c68307c89fdac355d558cea3}{bmp280\_comp\_temp\_double}}(ucomp\_data.uncomp\_temp, &bmp);
+    \textcolor{keywordtype}{double} pres = \mbox{\hyperlink{bmp280_8c_a6831ce2f3c7a6dd8b4b4e813b6fd8cda}{bmp280\_comp\_pres\_double}}(ucomp\_data.uncomp\_press, &bmp);
+
+    printf(\textcolor{stringliteral}{"UT: %d, UP: %d, T32: %d, P32: %d, P64: %d, P64N: %d, T: %f, P: %f\(\backslash\)r\(\backslash\)n"}, \(\backslash\)
+      ucomp\_data.uncomp\_temp, ucomp\_data.uncomp\_press, temp32, \(\backslash\)
+      pres32, pres64, pres64 / 256, temp, pres);
+
+    bmp.delay\_ms(1000); \textcolor{comment}{/* Sleep time between measurements = BMP280\_ODR\_1000\_MS */}
+\}
+\end{DoxyCode}
+ 

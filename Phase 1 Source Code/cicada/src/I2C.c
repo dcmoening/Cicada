@@ -15,8 +15,13 @@ void configure_i2c_master(void)
 	i2c_master_get_config_defaults(&config_i2c_master);
 	/* Change buffer timeout to something longer. */
 	config_i2c_master.buffer_timeout = 10000;
+
+	// change pins to use outputs marked on the Feather board (from samd21g18a.h)
+	config_i2c_master.pinmux_pad0 = PINMUX_PA22C_SERCOM3_PAD0; // sda pin
+	config_i2c_master.pinmux_pad1 = PINMUX_PA23C_SERCOM3_PAD1; // sck pin
+
 	/* Initialize and enable device with config. */
-	i2c_master_init(&i2c_master_instance, SERCOM5, &config_i2c_master);
+	i2c_master_init(&i2c_master_instance, SERCOM3, &config_i2c_master);
 	i2c_master_enable(&i2c_master_instance);
 }
 //u8 dev_addr, u8 reg_addr, u8 *reg_data, u8 cnt
@@ -64,6 +69,8 @@ uint8_t I2C_Write(uint8_t addr, uint8_t startRegister, uint8_t *data, uint8_t cn
 			retVAl = -1;
 		}
 	}
+
+	return retVAl;
 }
 
 void getI2CDataFromSlave(struct i2c_master_packet mypacket)
@@ -93,7 +100,6 @@ void getI2CDataFromSlave(struct i2c_master_packet mypacket)
 	/* Init i2c packet. */	  
 	packet.address = SLAVE_ADDRESS;
 	packet.data_length = DATA_LENGTH;
-	packet.data = write_buffer;
 	packet.ten_bit_address = false;
 	packet.high_speed = false;
 	packet.hs_master_code = 0x0;
