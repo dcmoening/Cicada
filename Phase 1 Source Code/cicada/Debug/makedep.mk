@@ -2,6 +2,10 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\SeggerRTT\SEGGER_RTT.c
+
+src\SeggerRTT\SEGGER_RTT_printf.c
+
 src\ASF\common2\services\delay\sam0\systick_counter.c
 
 src\ASF\sam0\drivers\sercom\i2c\i2c_sam0\i2c_master.c

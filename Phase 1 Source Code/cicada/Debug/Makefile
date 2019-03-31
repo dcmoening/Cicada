@@ -98,11 +98,14 @@ SUBDIRS :=  \
 ../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/portable/GCC/ARM_CM0/ \
 ../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/portable/MemMang/ \
 ../src/config/ \
-../src/BMP280_Driver
+../src/BMP280_Driver \
+../src/SeggerRTT
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../src/SeggerRTT/SEGGER_RTT.c \
+../src/SeggerRTT/SEGGER_RTT_printf.c \
 ../src/ASF/common2/services/delay/sam0/systick_counter.c \
 ../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0/i2c_master.c \
 ../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0/i2c_master_interrupt.c \
@@ -138,6 +141,8 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+src/SeggerRTT/SEGGER_RTT.o \
+src/SeggerRTT/SEGGER_RTT_printf.o \
 src/ASF/common2/services/delay/sam0/systick_counter.o \
 src/ASF/sam0/drivers/sercom/i2c/i2c_sam0/i2c_master.o \
 src/ASF/sam0/drivers/sercom/i2c/i2c_sam0/i2c_master_interrupt.o \
@@ -166,6 +171,8 @@ src/I2C.o \
 src/main.o
 
 OBJS_AS_ARGS +=  \
+src/SeggerRTT/SEGGER_RTT.o \
+src/SeggerRTT/SEGGER_RTT_printf.o \
 src/ASF/common2/services/delay/sam0/systick_counter.o \
 src/ASF/sam0/drivers/sercom/i2c/i2c_sam0/i2c_master.o \
 src/ASF/sam0/drivers/sercom/i2c/i2c_sam0/i2c_master_interrupt.o \
@@ -194,6 +201,8 @@ src/I2C.o \
 src/main.o
 
 C_DEPS +=  \
+src/SeggerRTT/SEGGER_RTT.d \
+src/SeggerRTT/SEGGER_RTT_printf.d \
 src/ASF/common2/services/delay/sam0/systick_counter.d \
 src/ASF/sam0/drivers/sercom/i2c/i2c_sam0/i2c_master.d \
 src/ASF/sam0/drivers/sercom/i2c/i2c_sam0/i2c_master_interrupt.d \
@@ -222,6 +231,8 @@ src/I2C.d \
 src/main.d
 
 C_DEPS_AS_ARGS +=  \
+src/SeggerRTT/SEGGER_RTT.d \
+src/SeggerRTT/SEGGER_RTT_printf.d \
 src/ASF/common2/services/delay/sam0/systick_counter.d \
 src/ASF/sam0/drivers/sercom/i2c/i2c_sam0/i2c_master.d \
 src/ASF/sam0/drivers/sercom/i2c/i2c_sam0/i2c_master_interrupt.d \
@@ -264,6 +275,20 @@ LINKER_SCRIPT_DEP+=  \
 
 
 # AVR32/GNU C Compiler
+src/SeggerRTT/SEGGER_RTT.o: ../src/SeggerRTT/SEGGER_RTT.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21G18A__ -DDEBUG -DBOARD=USER_BOARD -DARM_MATH_CM0PLUS=true -DI2C_MASTER_CALLBACK_MODE=true -D__FREERTOS__ -DSYSTICK_MODE  -I"../src/ASF/common/boards" -I"../src/ASF/sam0/utils" -I"../src/ASF/sam0/utils/header_files" -I"../src/ASF/sam0/utils/preprocessor" -I"../src/ASF/thirdparty/CMSIS/Include" -I"../src/ASF/thirdparty/CMSIS/Lib/GCC" -I"../src/ASF/common/utils" -I"../src/ASF/sam0/utils/cmsis/samd21/include" -I"../src/ASF/sam0/utils/cmsis/samd21/source" -I"../src/ASF/sam0/drivers/system" -I"../src/ASF/sam0/drivers/system/clock/clock_samd21_r21_da_ha1" -I"../src/ASF/sam0/drivers/system/clock" -I"../src/ASF/sam0/drivers/system/interrupt" -I"../src/ASF/sam0/drivers/system/interrupt/system_interrupt_samd21" -I"../src/ASF/sam0/drivers/system/pinmux" -I"../src/ASF/sam0/drivers/system/power" -I"../src/ASF/sam0/drivers/system/power/power_sam_d_r_h" -I"../src/ASF/sam0/drivers/system/reset" -I"../src/ASF/sam0/drivers/system/reset/reset_sam_d_r_h" -I"../src/ASF/common2/boards/user_board" -I"../src" -I"../src/config" -I"../src/ASF/common/services/ioport" -I"../src/ASF/sam0/drivers/sercom" -I"../src/ASF/sam0/drivers/sercom/i2c" -I"../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0" -I"../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/include" -I"../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/portable/GCC/ARM_CM0" -I"../src/ASF/common2/services/delay" -I"../src/ASF/common2/services/delay/sam0" -I"../src/BMP280_Driver"  -O1 -fdata-sections -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -pipe -fno-strict-aliasing -Wall -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -std=gnu99 -ffunction-sections -fdata-sections -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int -Wmain -Wparentheses -Wsequence-point -Wreturn-type -Wswitch -Wtrigraphs -Wunused -Wuninitialized -Wunknown-pragmas -Wfloat-equal -Wundef -Wshadow -Wbad-function-cast -Wwrite-strings -Wsign-compare -Waggregate-return  -Wmissing-declarations -Wformat -Wmissing-format-attribute -Wno-deprecated-declarations -Wpacked -Wredundant-decls -Wnested-externs -Wlong-long -Wunreachable-code -Wcast-align --param max-inline-insns-single=500 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/SeggerRTT/SEGGER_RTT_printf.o: ../src/SeggerRTT/SEGGER_RTT_printf.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21G18A__ -DDEBUG -DBOARD=USER_BOARD -DARM_MATH_CM0PLUS=true -DI2C_MASTER_CALLBACK_MODE=true -D__FREERTOS__ -DSYSTICK_MODE  -I"../src/ASF/common/boards" -I"../src/ASF/sam0/utils" -I"../src/ASF/sam0/utils/header_files" -I"../src/ASF/sam0/utils/preprocessor" -I"../src/ASF/thirdparty/CMSIS/Include" -I"../src/ASF/thirdparty/CMSIS/Lib/GCC" -I"../src/ASF/common/utils" -I"../src/ASF/sam0/utils/cmsis/samd21/include" -I"../src/ASF/sam0/utils/cmsis/samd21/source" -I"../src/ASF/sam0/drivers/system" -I"../src/ASF/sam0/drivers/system/clock/clock_samd21_r21_da_ha1" -I"../src/ASF/sam0/drivers/system/clock" -I"../src/ASF/sam0/drivers/system/interrupt" -I"../src/ASF/sam0/drivers/system/interrupt/system_interrupt_samd21" -I"../src/ASF/sam0/drivers/system/pinmux" -I"../src/ASF/sam0/drivers/system/power" -I"../src/ASF/sam0/drivers/system/power/power_sam_d_r_h" -I"../src/ASF/sam0/drivers/system/reset" -I"../src/ASF/sam0/drivers/system/reset/reset_sam_d_r_h" -I"../src/ASF/common2/boards/user_board" -I"../src" -I"../src/config" -I"../src/ASF/common/services/ioport" -I"../src/ASF/sam0/drivers/sercom" -I"../src/ASF/sam0/drivers/sercom/i2c" -I"../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0" -I"../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/include" -I"../src/ASF/thirdparty/freertos/freertos-7.4.2/Source/portable/GCC/ARM_CM0" -I"../src/ASF/common2/services/delay" -I"../src/ASF/common2/services/delay/sam0" -I"../src/BMP280_Driver"  -O1 -fdata-sections -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -pipe -fno-strict-aliasing -Wall -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -std=gnu99 -ffunction-sections -fdata-sections -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int -Wmain -Wparentheses -Wsequence-point -Wreturn-type -Wswitch -Wtrigraphs -Wunused -Wuninitialized -Wunknown-pragmas -Wfloat-equal -Wundef -Wshadow -Wbad-function-cast -Wwrite-strings -Wsign-compare -Waggregate-return  -Wmissing-declarations -Wformat -Wmissing-format-attribute -Wno-deprecated-declarations -Wpacked -Wredundant-decls -Wnested-externs -Wlong-long -Wunreachable-code -Wcast-align --param max-inline-insns-single=500 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 src/ASF/common2/services/delay/sam0/systick_counter.o: ../src/ASF/common2/services/delay/sam0/systick_counter.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1

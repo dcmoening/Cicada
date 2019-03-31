@@ -151,7 +151,9 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/sam0/drivers/sercom/i2c/i2c_master_interrupt.h \
  ../src/ASF/sam0/drivers/sercom/i2c/i2c_master.h \
  ../src/PressureTemperature.h ../src/BMP280_Driver/bmp280.h \
- ../src/BMP280_Driver/bmp280_defs.h ../src/I2C.h
+ ../src/BMP280_Driver/bmp280_defs.h ../src/I2C.h \
+ ../src/SeggerRTT/SEGGER_RTT.h ../src/SeggerRTT/SEGGER_RTT_Conf.h \
+ ../src/BMP280\ Driver/bmp280.h
 
 ../src/asf.h:
 
@@ -468,3 +470,9 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/BMP280_Driver/bmp280_defs.h:
 
 ../src/I2C.h:
+
+../src/SeggerRTT/SEGGER_RTT.h:
+
+../src/SeggerRTT/SEGGER_RTT_Conf.h:
+
+../src/BMP280\ Driver/bmp280.h:

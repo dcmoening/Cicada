@@ -438,10 +438,11 @@ BMP280_BUS_RD_PARAM_TYPE to function calls used inside the API
 /**\name	COMMON USED CONSTANTS       */
 /***************************************************************/
 /* Constants */
-#define BMP280_NULL                          (0)
+
 #define BMP280_RETURN_FUNCTION_TYPE          s8
 /* right shift definitions*/
-#define BMP280_SHIFT_BIT_POSITION_BY_01_BIT				 (1)
+#define BMP280_NULL										(0)
+#define BMP280_SHIFT_BIT_POSITION_BY_01_BIT				(1)
 #define BMP280_SHIFT_BIT_POSITION_BY_02_BITS			(2)
 #define BMP280_SHIFT_BIT_POSITION_BY_03_BITS			(3)
 #define BMP280_SHIFT_BIT_POSITION_BY_04_BITS			(4)

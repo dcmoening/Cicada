@@ -23,7 +23,7 @@
 struct i2c_master_module i2c_master_instance;
 struct i2c_master_packet packet;
 
-static uint8_t read_buffer[DATA_LENGTH];
+//static uint8_t read_buffer[DATA_LENGTH];
 
 //struct i2c_master_packet {
 	//address = SLAVE_ADDRESS;

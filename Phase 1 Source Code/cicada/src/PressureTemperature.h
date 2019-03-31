@@ -16,10 +16,10 @@
 
 struct bmp280_dev bmp;
 
-void InitBMP280(void);
-void ConfigureBMP280(void);
+int8_t InitBMP280(void);
+int8_t ConfigureBMP280(void);
 void BMP_Delay_MS(uint32_t delay);
 uint8_t BMP_280_Read(uint8_t addr, uint8_t startRegister, uint8_t *data, uint8_t cnt);
 uint8_t BMP_280_Write(uint8_t addr, uint8_t startRegister, uint8_t *data, uint8_t cnt);
-void BMP280_ReadCompPresTemp(double *compTemperatre, double *compPressure);
+int8_t BMP280_ReadCompPresTemp(double *compTemperature, double *compPressure);
 #endif /* PRESSURETEMPERATURE_H_ */

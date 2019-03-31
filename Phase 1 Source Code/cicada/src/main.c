@@ -27,55 +27,73 @@
 /*
  * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
+
+ /*
+ helpful site for Segger RTT
+ https://www.segger.com/products/debug-probes/j-link/tools/rtt-viewer/
+ */
+
 #include <asf.h>
 #include "PressureTemperature.h"
+#include "SeggerRTT/SEGGER_RTT.h"
+#include "BMP280 Driver/bmp280.h"
+//#include "avr/dtostrf.h"
+#include <stdio.h>
+
+char *gcvt(double number, int ndigit, char *buf);
 
 //////////////////////////////////////////////////////////////////////////
 //Main Function Where The Magic Happens!
 //////////////////////////////////////////////////////////////////////////
 int main (void)
 {	
+	int8_t result = 0;
+
 	double temperature = 0;
-	double pressure = 0;
-
-	double debug_temp = 0;
-	double debug_pres = 0;
-
-	static double final_temp = 0;
-	static double final_pres = 0;
+	double pressure = 0;		
 
 	//Initialize I2C settings
 	configure_i2c_master();
-
+	
 	//Initialize delay settings
 	delay_init();
 
 	//Init BMP280 Data structure
-	InitBMP280();
+	result = InitBMP280();
 
-	//Configure settings for BMP280
-	ConfigureBMP280();
+	if(result == BMP280_OK)
+	{
+		//Configure settings for BMP280
+		result = ConfigureBMP280();
+	}		
+
+	char tempStr[5];
+	char presStr[5]; 
 	
-	//Get Temperature and Pressure
-	BMP280_ReadCompPresTemp(&temperature, &pressure);
+	while(result == BMP280_OK)
+	{
+		//Get Temperature and Pressure
+		BMP280_ReadCompPresTemp(&temperature, &pressure);
+		
+		//Convert temperature to Fahrenheit
+		float ftemperature = temperature * 1.8f + 32;
+		//dtostrf(ftemperature,3,2,tempStr);
+		gcvt(ftemperature,4,tempStr);
+		
 
-	debug_temp = temperature;
-	debug_pres = pressure;	
+		//Convert Pressure to inHg
+		float fpressure = pressure * .0002953f;
+		//sprintf(presStr,"%f",fpressure);
+		gcvt(fpressure,4,presStr);
 
-	BMP280_ReadCompPresTemp(&temperature, &pressure);
+		SEGGER_RTT_printf(0,"Temperature is: %s F\r\nPressure is: %s inHg\r\n",tempStr,presStr);
 
-	debug_temp = temperature;
-	debug_pres = pressure;
+		delay_ms(5000);
+	}
 	
-	BMP280_ReadCompPresTemp(&temperature, &pressure);
-
-	debug_temp = temperature;
-	debug_pres = pressure;
-	
-	BMP280_ReadCompPresTemp(&temperature, &pressure);
-
-	debug_temp = temperature;
-	debug_pres = pressure;		
+	SEGGER_RTT_printf(0, "Error has occured!");
+			
 
 	return 0;
 }
+

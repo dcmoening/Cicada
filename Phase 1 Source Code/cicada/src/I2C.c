@@ -76,7 +76,7 @@ uint8_t I2C_Write(uint8_t addr, uint8_t startRegister, uint8_t *data, uint8_t cn
 void getI2CDataFromSlave(struct i2c_master_packet mypacket)
 {
 	uint16_t timeout = 0;
-
+	uint8_t read_buffer[DATA_LENGTH];
 	while (i2c_master_write_packet_wait(&i2c_master_instance, &mypacket) !=
 	STATUS_OK) {
 		/* Increment timeout counter and check if timed out. */
